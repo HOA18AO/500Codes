@@ -1,0 +1,78 @@
+class Solution {
+public:
+    long stringToInt(string s)
+    {
+        long ans = 0;
+        for(auto i : s)
+        {
+            ans = ans*10 + int(i) -48;
+        }
+        return ans;
+    }
+    string intToString(int x)
+    {
+        string ans;
+        if(x==0)
+            return "0";
+        while(x > 0)
+        {
+            ans = char(x%10 + 48) + ans;
+            x/=10;
+        }
+        return ans;
+    }
+    int calculate(string s) {
+        int ans;
+        if(s == "")
+            return 0;
+        for(int i=0 ; i<s.size() ; i++)
+            if(s[i] == ' ')
+                s.erase(s.begin()+i--);
+        cout << s << "\n";
+        vector<string> box;
+        string tmp = "";
+        for(int i=0 ; i<s.size() ; i++)
+        {
+            if('0'<=s[i] and s[i]<='9')
+                tmp += s[i];
+            else
+            {
+                box.push_back(tmp);
+                tmp = s[i];
+                box.push_back(tmp);
+                tmp = "";
+            }
+            if(i == s.size()-1)
+                box.push_back(tmp);
+        }
+        for(int i=0 ; i<box.size() ; i++)
+        {
+            if(box[i] == "*")
+            {
+                box[i-1] = intToString(stringToInt(box[i-1]) * stringToInt(box[i+1]));
+                box.erase(box.begin()+i);
+                box.erase(box.begin()+i--);
+            }
+            if(box[i] == "/")
+            {
+                box[i-1] = intToString(stringToInt(box[i-1]) / stringToInt(box[i+1]));
+                box.erase(box.begin()+i);
+                box.erase(box.begin()+i--);
+            }
+        }
+        ans = 0;
+        for(int i=0 ; i<box.size() ; i++)
+        {
+            if(i==0)
+                ans += stringToInt(box[i]);
+            else
+            {
+                if(box[i] == "+")
+                    ans += stringToInt(box[i+1]);
+                if(box[i] == "-")
+                    ans -= stringToInt(box[i+1]);
+            }
+        }
+        return ans;
+    }
+};

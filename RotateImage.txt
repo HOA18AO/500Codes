@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void print(vector<vector<int>> a)
+    {
+        for(int i=0 ; i<a.size() ; i++)
+            {
+                for(int j=0 ; j<a[i].size() ; j++)
+                    cout << a[i][j] << " ";
+                cout << "\n";
+            }
+    }
+    void rotate(vector<vector<int>>& matrix) {
+        // always is a square
+        int n = matrix.size();
+        for(int i=0 ; i<n ; i++)
+        {
+            for(int j=i+1 ; j<n ; j++)
+            {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+        for(int i=0 ; i<n ; i++)
+            for(int j=0 ; j<n/2 ; j++)
+                swap(matrix[i][j], matrix[i][n-1-j]);
+                // could also use reverse() function;
+        print(matrix);
+    }
+};

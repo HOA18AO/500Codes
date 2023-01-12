@@ -1,0 +1,81 @@
+class Solution {
+public:
+    
+    bool isNumber(char x) // check if <char>x is numberic
+    {
+        return '0' <= x and x <= '9';
+    }
+    bool isCharacter(char x)
+    {
+        return 'a' <= x and x <= 'z';
+    }
+    int stringToInt(string s)
+    {
+        int ans = 0;
+        for(int i=0 ; i<s.size() ; i++)
+            ans = ans*10 + int(s[i])-48;
+        return ans;
+    }
+
+    void convert(stack<string> box, string& s)
+    {
+        while(!box.empty())
+        {
+            s = box.top() + s;
+            box.pop();
+        }
+    }
+
+    string decodeString(string s)   // main
+    {
+        string ans = "";
+        stack<string> box;
+        string tmp;
+        for(int i= 0 ; i<s.size() ; i++)
+        {
+            if(isNumber(s[i]))
+            {
+                tmp = "";
+                while(isNumber(s[i]))
+                    tmp += s[i++];
+                box.push(tmp);
+                i--;
+            }
+            if(isCharacter(s[i]))
+            {
+                tmp = "";
+                while(isCharacter(s[i]))
+                    tmp+= s[i++];
+                box.push(tmp);
+                i--;
+            // now s[i] != character
+            }
+            if(s[i] == '[')
+            {
+                tmp = s[i];
+                box.push(tmp);
+            }
+            if(s[i] == ']')
+            {
+                string helper = "";
+                while(box.top() != "[")
+                {
+                    helper = box.top() + helper;
+                    box.pop();
+                }
+                string helper2 = helper;
+                // now box.top() is the [
+                box.pop();
+                // now box.top is the number
+                int loop = stringToInt(box.top());
+                for(int t=1 ; t<loop ; t++)
+                    helper2 += helper;
+                box.pop();
+                // get risk of the number
+                box.push(helper2);
+            }
+        }
+        convert(box, ans);
+        return ans;
+    }
+};

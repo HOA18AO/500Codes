@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool canConstruct(string a, string b) {
+        
+        if(a.size() > b.size())
+            return false;
+        map<char, int> check;
+        for(auto i : a)
+            check[i]++;
+        for(auto i : b)
+            if(check[i] != 0)
+                check[i]--;
+        for(char i='a' ; i<='z' ; i++)
+            if(check[i] != 0)
+                return false;
+        return true;
+    }
+};

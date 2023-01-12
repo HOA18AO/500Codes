@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int ZeroCounter(vector<int> X)
+    {
+        int ans = 0;
+        for(auto i: X)
+            if(i == 0)
+                ans++;
+        return ans;
+    }
+    void moveZeroes(vector<int>& X) {
+        int z = ZeroCounter(X);
+        if(z==0 or z==X.size())
+            return;
+        for(int i=0 ; i<X.size() ; i++)
+        {
+            if(X[i]==0)
+            {
+                X.erase( X.begin()+i);
+                i--;
+            }
+        }
+        for(int i=1 ; i<=z ; i++)
+            X.push_back(0);
+    }
+};

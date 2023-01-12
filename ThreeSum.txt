@@ -1,0 +1,95 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> neg, pos, zer;
+        map<int,int> neg_set, pos_set;
+        map<vector<int>, int> check;
+        
+        sort(nums.begin(), nums.end());
+        
+        for(int i : nums)
+        {
+            if(i == 0)
+                zer.push_back(i);
+            else
+                if(i > 0)
+                {
+                    pos.push_back(i);
+                    pos_set[i]++;
+                }
+                else
+                {
+                    neg.push_back(i);
+                    neg_set[i]++;
+                }
+        }
+        
+        if(zer.size() >= 3)
+            ans.push_back({0,0,0});
+        
+        
+        
+        int x;
+        if(neg.size() > 0)
+        {
+            for(int i=0 ; i<neg.size()-1 ; i++)
+            {
+                for(int j=i+1 ; j<neg.size() ; j++)
+                {
+                    x = neg[i]+neg[j];
+                    if(pos_set[-1*x] > 0)
+                    {
+                        if(check[{neg[i], neg[j], -1*x}] == 0)
+                        {
+                            ans.push_back({neg[i], neg[j], -1*x});
+                            check[{neg[i], neg[j], -1*x}]++;
+                        }
+                    }
+                }
+            }
+        }
+        else
+            return ans;
+        
+        if(zer.size() > 0)
+        {
+            for(int i : pos)
+            {
+                if(neg_set[-1*i] > 0)
+                {
+                    if(check[{-1*i, 0, i}] == 0)
+                    {
+                        ans.push_back({-1*i, 0, i});
+                        check[{-1*i, 0, i}]++;
+                    }
+                }
+            }
+        }
+        
+        if(pos.size() > 0)
+        {
+            for(int i=0 ; i<pos.size()-1 ; i++)
+            {
+                for(int j=i+1 ; j<pos.size() ; j++)
+                {
+                    x = pos[i] + pos[j];
+                    if(neg_set[-1*x] > 0)
+                    {
+                        if(check[{-1*x, pos[i], pos[j]}] == 0)
+                        {
+                            ans.push_back({-1*x, pos[i], pos[j]});
+                            check[{-1*x, pos[i], pos[j]}]++;
+                        }
+                    }
+                }
+            }
+        }
+        else
+            return ans;
+        
+        
+        
+        return ans;
+    }
+};

@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int,int> findindex;
+        for(int i=0 ; i<nums.size() ; i++)
+            findindex[nums[i]] = i;
+        
+        map<int,int> check;
+        for(int i=0 ; i<nums.size() ; i++)
+            check[nums[i]]++;
+        
+        for(int i=0 ; i<nums.size() ; i++)
+        {
+            if(check[target - nums[i]] != 0)
+            {
+                if(target - nums[i] != nums[i])
+                    return {findindex[nums[i]], findindex[target-nums[i]]};
+                if(target - nums[i] == nums[i] and check[nums[i]] > 1)
+                    return {i, findindex[target-nums[i]]};
+            }
+        }
+        return {};
+    }
+};

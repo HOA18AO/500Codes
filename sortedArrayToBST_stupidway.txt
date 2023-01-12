@@ -1,0 +1,89 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+#include<bits/stdc++.h>
+class Solution {
+public:
+    TreeNode* setNode(int x)
+    {
+        TreeNode* p = new TreeNode;
+        p->val = x;
+        p->left = NULL;
+        p->right= NULL;
+        return p;
+    }
+    void InsertNode(TreeNode* &root, int x)
+    {
+        if(root==NULL)
+            root = setNode(x);
+        else
+            if(x < root->val)
+                InsertNode(root->left, x);
+            else
+                InsertNode(root->right, x);
+    }
+    int Height(TreeNode* root)
+    {
+        if(root==NULL)
+            return 0;
+        else
+            return 1 + max(Height(root->left), Height(root->right));
+    }
+    void leftRotate(TreeNode* &root)
+    {
+        TreeNode *x = root;
+        TreeNode *y = root->right;
+        root = y;
+        x->right = NULL;
+        while(y->left != NULL)
+            y = y->left;
+        y->left = x;
+    }
+    void rightRotate(TreeNode* &root)
+    {
+        TreeNode *x = root;
+        TreeNode *y = root->left;
+        root = y;
+        x->left = NULL;
+        while(y->right != NULL)
+            y = y->right;
+        y->right = x;
+    }
+    void selfBalanced(TreeNode *&root)
+    {
+        if(root != NULL)
+        {
+            int l,r;
+            do
+            {
+                l = Height(root->left);
+                r = Height(root->right);
+                if(l - r > 1)
+                    rightRotate(root);
+                if(r - l > 1)
+                    leftRotate(root);
+            }
+            while(abs(l-r) > 1);
+            selfBalanced(root->left);
+            selfBalanced(root->right);
+        }
+    }
+    
+    
+    
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        TreeNode* root;
+        for(int i : nums)
+            InsertNode(root, i);
+        selfBalanced(root);
+        return root;
+    }
+};

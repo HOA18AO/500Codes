@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void Permute(vector<int>& nums, int start, vector<vector<int>>& result) // start==0 at the first place
+{
+    if(start >= nums.size())
+        result.push_back(nums);
+    else
+    {
+        for(int i = start; i<nums.size() ; i++)
+        {
+            swap(nums[start], nums[i]);
+            Permute(nums, start+1, result);
+            swap(nums[start], nums[i]);
+        }
+    }
+}
+
+vector<vector<int>> Permutation(vector<int> nums)
+{
+    vector<vector<int>> answer;
+    Permute(nums, 0, answer);
+    return answer;
+}
+
+void print(vector<int> nums)
+{
+    cout << "[";
+    for(int i=0 ; i<nums.size() ; i++)
+    {
+        cout << nums[i];
+        if(i < nums.size()-1)
+            cout << ", ";
+    }
+    cout << "]\n";
+}
+
+int main()
+{
+    vector<int> nums;
+    int x;
+    while(cin >> x)
+    {
+        if(x != -1)
+            nums.push_back(x);
+        else
+            break;
+    }
+    vector<vector<int>> ans = Permutation(nums);
+    for(auto i : ans)
+    {
+        print(i);
+    }
+}

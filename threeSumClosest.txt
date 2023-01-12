@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        // nums.size() >= 3
+        sort(nums.begin(), nums.end());
+        
+        int lastSum , currentSum;
+        lastSum = nums[0] + nums[1] + nums[2] - target; // lastSum is used to save the best verion of answer
+        for(int i=0 ; i<nums.size()-2 ; i++)
+        {
+            int head = i+1;
+            int tail = nums.size()-1;
+            while(head < tail)
+            {
+                currentSum = nums[i]+nums[head]+nums[tail] - target;
+                if(abs(lastSum) > abs(currentSum))
+                    lastSum = currentSum;
+                if(currentSum == 0)
+                    return target;
+                else
+                    if(currentSum > 0)
+                        tail--;
+                    else
+                        head++;
+            }
+        }
+
+        return lastSum + target;
+    }
+};

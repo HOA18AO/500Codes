@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x<0)
+            return false;
+        stack<int> s;
+        queue<int> q;
+        int a;
+        while(x>0)
+        {
+            a = x%10;
+            s.push(a);
+            q.push(a);
+            x/=10;
+        }
+        while(!s.empty() or !q.empty())
+        {
+            if(s.top() != q.front())
+                return false;
+            s.pop();
+            q.pop();
+        }
+        return true;
+    }
+};

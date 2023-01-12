@@ -1,0 +1,37 @@
+class Solution {
+public:
+    
+    string IntegerToBinary(int n)
+    {
+        string s;
+        if(n == 0)
+            return "0";
+        else
+            while(n>0)
+            {
+                s = char(n%2 + 48) + s;
+                n/=2;
+            }
+        return s;
+    }
+    
+    int countingNumber1s(string s)
+    {
+        int ans = 0;
+        for(auto i : s)
+        {
+            if(i == '1')
+                ans++;
+        }
+        return ans;
+    }
+    
+    vector<int> countBits(int n) {
+        vector<int> a;
+        for(int i=0 ; i<=n ; i++)
+        {
+            a.push_back(countingNumber1s(IntegerToBinary(i)));
+        }
+        return a;
+    }
+};

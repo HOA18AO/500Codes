@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if(n == 0)
+            return false;
+        else
+            if(n == 1 or n == 2)
+                return true;
+            else
+                if(n%2 != 0)
+                    return false;
+                else
+                    return isPowerOfTwo(n/2);
+    }
+    bool isPowerOfFour(int n) {
+        if(isPowerOfTwo(n) == false)
+            return false;
+        else
+            if(n < 4)
+                if(n == 1)
+                    return true;
+                else
+                    return false;
+            else
+                if(n < 4)
+                    if(n == 1)
+                        return true;
+                    else
+                        return false;
+                else
+                {
+                    if(pow(int(sqrt(n)), 2) == n)
+                        return true;
+                    else
+                        return false;
+                }
+    }
+};

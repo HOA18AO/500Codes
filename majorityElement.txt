@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        map<int,int> check;
+        pair<int,int> ans;
+        ans.second = 0;
+        ans.first = 0;
+        
+        for(int i : nums)
+        {
+            check[i]++;
+            if(check[i] > ans.second)
+            {
+                ans.second = check[i];
+                ans.first = i;
+            }
+        }
+        return ans.first;
+    }
+};

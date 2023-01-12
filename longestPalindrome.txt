@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int longestPalindrome(string s) {
+        int lenght=0;
+        if(s.size() == 0)
+            return 0;
+        map<char, int> check;
+        for(auto i : s)
+            check[i]++;
+        for(char i='a' ; i<='z' ; i++)
+        {
+            lenght += check[i]/2 *2;
+            check[i] %= 2;
+        }
+        for(char i='A' ; i<='Z' ; i++)
+        {
+            lenght += check[i]/2 *2;
+            check[i] %= 2;
+        }
+        for(char i='a' ; i<='z' ; i++)
+            if(check[i] > 0)
+            {
+                lenght++;
+                return lenght;
+            }
+        for(char i='A' ; i<='Z' ; i++)
+            if(check[i] > 0)
+            {
+                lenght++;
+                return lenght;
+            }
+        return lenght;
+    }
+};
